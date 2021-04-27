@@ -2,39 +2,103 @@ package it.polito.tdp.alien;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.StringTokenizer;
 
+import it.polito.tdp.alien.model.AlienDictionary;
+import it.polito.tdp.alien.model.Parole;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 public class FXMLController {
+	
+	private AlienDictionary elenco = new AlienDictionary();
 
     @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
-    
+
     @FXML
-    private Button btnTranslate;
-    
+    private TextField field;
+
     @FXML
-    private Button btnReset;
+    private Button Transalte;
+
+    @FXML
+    private TextArea area;
+
+    @FXML
+    private Button Reset;
+
+    void doReset(ActionEvent event) {
+    	field.clear();
+    	area.clear();
+    	elenco.resetDictionary();
+    }
 
     @FXML
     void doTranslate(ActionEvent event) {
-    	// TODO - add the button and complete this    	
+    	
+		area.clear();
+		String riga = field.getText().toLowerCase();
+
+		if (riga == null || riga.length() == 0) {
+			area.setText("Inserire una o due parole.");
+			return;
+		}
+
+		StringTokenizer st = new StringTokenizer(riga, " ");
+
+		if (!st.hasMoreElements()) {
+			area.setText("Inserire una o due parole.");
+			return;
+		}
+
+		String alienWord = st.nextToken();
+
+		if (st.hasMoreTokens()) {
+
+			String translation = st.nextToken();
+
+			if (!alienWord.matches("[a-zA-Z]*") || !translation.matches("[a-zA-Z]*")) {
+				area.setText("Inserire solo caratteri alfabetici.");
+				return;
+			}
+
+			
+			elenco.addWord(alienWord, translation);
+
+			area.setText("La parola: \"" + alienWord + "\", con traduzione: \"" + translation + "\", è stata inserita nel dizionario.");
+
+		} else {
+
+			if (!alienWord.matches("[a-zA-Z]*")) {
+				area.setText("Inserire solo caratteri alfabetici.");
+				return;
+			}
+
+			String translation = elenco.translateWord(alienWord);
+
+			if (translation != null) {
+				area.setText(translation);
+			} else {
+				area.setText("La parola cercata non esiste nel dizionario.");
+			}
+		}
+    	
+    	
+
     }
-    
-    
-    @FXML
-    void doReset(ActionEvent event) {
-    	// TODO - add the button and complete this 
-    }
-    
-    
     @FXML
     void initialize() {
+        assert field != null : "fx:id=\"field\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert Transalte != null : "fx:id=\"Transalte\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert area != null : "fx:id=\"area\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert Reset != null : "fx:id=\"Reset\" was not injected: check your FXML file 'Scene.fxml'.";
 
     }
 }
