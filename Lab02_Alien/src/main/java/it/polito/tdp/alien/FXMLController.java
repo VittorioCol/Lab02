@@ -99,6 +99,5 @@ public class FXMLController {
         assert Transalte != null : "fx:id=\"Transalte\" was not injected: check your FXML file 'Scene.fxml'.";
         assert area != null : "fx:id=\"area\" was not injected: check your FXML file 'Scene.fxml'.";
         assert Reset != null : "fx:id=\"Reset\" was not injected: check your FXML file 'Scene.fxml'.";
-
     }
 }
