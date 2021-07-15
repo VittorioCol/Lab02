@@ -4,8 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
-import it.polito.tdp.alien.model.AlienDictionary;
-import it.polito.tdp.alien.model.Parole;
+import it.polito.tdp.alien.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,9 +12,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class FXMLController {
-	
-	private AlienDictionary elenco = new AlienDictionary();
 
+	Model model;
+	
     @FXML
     private ResourceBundle resources;
 
@@ -34,16 +33,16 @@ public class FXMLController {
     @FXML
     private Button Reset;
 
+    @FXML
     void doReset(ActionEvent event) {
-    	field.clear();
+      	field.clear();
     	area.clear();
-    	elenco.resetDictionary();
+    	model.resetDictionary();
     }
 
     @FXML
-    void doTranslate(ActionEvent event) {
-    	
-		area.clear();
+    void doTransalte(ActionEvent event) {
+    	area.clear();
 		String riga = field.getText().toLowerCase();
 
 		if (riga == null || riga.length() == 0) {
@@ -70,7 +69,7 @@ public class FXMLController {
 			}
 
 			
-			elenco.addWord(alienWord, translation);
+			model.addWord(alienWord, translation);
 
 			area.setText("La parola: \"" + alienWord + "\", con traduzione: \"" + translation + "\", è stata inserita nel dizionario.");
 
@@ -81,7 +80,7 @@ public class FXMLController {
 				return;
 			}
 
-			String translation = elenco.translateWord(alienWord);
+			String translation = model.translateWord(alienWord);
 
 			if (translation != null) {
 				area.setText(translation);
@@ -90,14 +89,17 @@ public class FXMLController {
 			}
 		}
     	
-    	
-
     }
+
     @FXML
     void initialize() {
         assert field != null : "fx:id=\"field\" was not injected: check your FXML file 'Scene.fxml'.";
         assert Transalte != null : "fx:id=\"Transalte\" was not injected: check your FXML file 'Scene.fxml'.";
         assert area != null : "fx:id=\"area\" was not injected: check your FXML file 'Scene.fxml'.";
         assert Reset != null : "fx:id=\"Reset\" was not injected: check your FXML file 'Scene.fxml'.";
+
     }
+	public void setModel(Model model) {
+		this.model=model;
+	}
 }
