@@ -1,33 +1,29 @@
 package it.polito.tdp.alien.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class Parole{
 	
 	private String alienWord;
-	private String translation;
+	private List<String> translations;
 	
 	
 	public Parole(String alienWord) {
 		this.alienWord = alienWord;
+		translations=new ArrayList<String>();
 	}
 
 
-	public Parole(String alienWord, String translation) {
-		super();
-		this.alienWord = alienWord;
-		this.translation = translation;
+	public String getTranslations() {
+		return translations.toString();
 	}
 
 
-	public String getTranslation() {
-		return translation;
-	}
-
-
-	public void setTranslation(String translation) {
-		this.translation = translation;
+	public void AddTranslations(String translation) {
+		this.translations.add(translation);
 	}
 
 

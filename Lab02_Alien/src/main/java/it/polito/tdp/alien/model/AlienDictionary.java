@@ -17,9 +17,10 @@ public class AlienDictionary {
 	}
 	
 	public void addWord(String alien, String trans) {
-		Parole w = new Parole(alien, trans);
+		Parole w = new Parole(alien);
+		w.AddTranslations(trans);
 		if (dictionary.contains(w)) {
-			dictionary.get(dictionary.indexOf(w)).setTranslation(trans);
+			dictionary.get(dictionary.indexOf(w)).AddTranslations(trans);
 			return;
 		}
 		dictionary.add(w);
@@ -28,7 +29,7 @@ public class AlienDictionary {
 	public String translateWord(String alien) {
 		Parole w = new Parole(alien);
 		if (dictionary.contains(w)) {
-			return dictionary.get(dictionary.indexOf(w)).getTranslation();
+			return dictionary.get(dictionary.indexOf(w)).getTranslations();
 		}
 		return null;
 	}
